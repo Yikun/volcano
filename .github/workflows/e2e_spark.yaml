@@ -35,27 +35,12 @@ jobs:
       run: |
         # Use pre-install minikube
         minikube start
-    - name: Build lastest volcano images
-      run: |
-        eval $(minikube docker-env)
-        make update-development-yaml
-        make TAG=latest images
-        docker images | grep volcano
-        cat ./installer/volcano-development.yaml  | grep image:
-        kubectl apply -f ./installer/volcano-latest.yaml
-      env:
-        GOPATH: ${{ github.workspace }}
-    - name: Show all K8S pods and nodes
-      run: |
-        # Use pre-install kubectl
-        kubectl get pods -A
-        kubectl get nodes -oyaml
     - name: Run K8S integration test
       run: |
         eval $(minikube docker-env)
         kubectl create clusterrolebinding serviceaccounts-cluster-admin --clusterrole=cluster-admin --group=system:serviceaccounts || true
         build/sbt -Pvolcano -Pkubernetes -Pkubernetes-integration-tests -Dtest.exclude.tags=minikube,r,local -Dtest.include.tags=volcano "kubernetes-integration-tests/test"
-      working-directory: ${{ github.workspace }}/spark-master
+      working-directory: ${{ github.workspace }}/../../${{ github.repository }}/spark-master
     - name: Cleanup minikube
       run: |
         minikube delete
