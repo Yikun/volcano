@@ -35,21 +35,6 @@ jobs:
       run: |
         # Use pre-install minikube
         minikube start
-    - name: Build lastest volcano images
-      run: |
-        eval $(minikube docker-env)
-        make update-development-yaml
-        make TAG=latest images
-        docker images | grep volcano
-        cat ./installer/volcano-development.yaml  | grep image:
-        kubectl apply -f ./installer/volcano-latest.yaml
-      env:
-        GOPATH: ${{ github.workspace }}
-    - name: Show all K8S pods and nodes
-      run: |
-        # Use pre-install kubectl
-        kubectl get pods -A
-        kubectl get nodes -oyaml
     - name: Run K8S integration test
       run: |
         eval $(minikube docker-env)
