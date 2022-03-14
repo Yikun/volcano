@@ -4,6 +4,8 @@ on:
   push:
     branches:
     - '**'
+
+jobs:
   k8s-integration-tests:
     name: Run K8S integration tests with volcano
     runs-on: self-hosted
