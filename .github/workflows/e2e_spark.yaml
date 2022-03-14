@@ -40,7 +40,7 @@ jobs:
         eval $(minikube docker-env)
         kubectl create clusterrolebinding serviceaccounts-cluster-admin --clusterrole=cluster-admin --group=system:serviceaccounts || true
         build/sbt -Pvolcano -Pkubernetes -Pkubernetes-integration-tests -Dtest.exclude.tags=minikube,r,local -Dtest.include.tags=volcano "kubernetes-integration-tests/test"
-      working-directory: ${{ github.workspace }}/spark-master
+      working-directory: ${{ github.workspace }}/../../${{ github.repository }}/spark-master
     - name: Cleanup minikube
       run: |
         minikube delete
