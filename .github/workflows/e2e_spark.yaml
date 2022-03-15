@@ -55,8 +55,8 @@ jobs:
     - name: Build lastest volcano images
       run: |
         eval $(minikube docker-env)
-        make TAG=ci update-development-yaml
-        make TAG=ci images
+        make TAG=latest update-development-yaml
+        make TAG=latest images
         docker images | grep volcano
         cat ./installer/volcano-development.yaml  | grep image:
         kubectl apply -f ./installer/volcano-development.yaml
