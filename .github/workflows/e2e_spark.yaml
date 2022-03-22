@@ -5,7 +5,6 @@ on:
   push:
     branches:
       - spark-ci
-  # TODO:
   pull_request:
   # Specify Spark and Volcano branch
   workflow_dispatch:
@@ -79,7 +78,7 @@ jobs:
       if: failure()
       uses: actions/upload-artifact@v2
       with:
-        name: spark-on-kubernetes-it-log
+        name: spark-on-kubernetes-with-volcano-it-log
         path: "**/target/integration-tests.log"
     - name: Cleanup minikube
       if: always()
