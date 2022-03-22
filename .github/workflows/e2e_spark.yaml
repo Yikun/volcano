@@ -23,7 +23,10 @@ jobs:
     name: "Run Spark(${{ github.event.inputs.spark-branch || 'master' }}) / Volcano(${{ github.event.inputs.volcano-branch || github.event.ref || 'current' }}) Integration test"
     runs-on: self-hosted
     steps:
-
+    - name: Debug print
+      run: |
+        echo '${{ toJSON(github.event) }}'
+        
     - name: Checkout Volcano repository
       if: github.event.inputs.spark-branch!='' || github.event.ref!=''
       uses: actions/checkout@v2
