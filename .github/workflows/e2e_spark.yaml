@@ -68,7 +68,7 @@ jobs:
       run: |
         eval $(minikube docker-env)
         kubectl create clusterrolebinding serviceaccounts-cluster-admin --clusterrole=cluster-admin --group=system:serviceaccounts || true
-        build/sbt -Pvolcano -Pkubernetes -Pkubernetes-integration-tests -Dtest.exclude.tags=minikube,r,local -Dtest.include.tags=volcano "kubernetes-integration-tests/test"
+        build/sbt -Pvolcano -Pkubernetes -Pkubernetes-integration-tests -Dtest.include.tags=volcano "kubernetes-integration-tests/test"
       working-directory: ${{ github.workspace }}/spark
     - name: Upload spark integration tests log files
       if: failure()
