@@ -4,9 +4,8 @@ on:
   # Post check in below branches
   push:
     branches:
-      - '**'
-  # Disable pull_request trigger when ready to merge
-  pull_request:
+      - master
+      - spark-ci
   # Specify Spark and Volcano branch
   workflow_dispatch:
     inputs:
