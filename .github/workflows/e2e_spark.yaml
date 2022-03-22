@@ -21,7 +21,7 @@ on:
 
 jobs:
   k8s-integration-tests:
-    name: "Run Spark(${{ github.event.inputs.spark-branch || 'master' }}) / Volcano(${{ github.event.inputs.volcano-branch || github.event.ref}}) Integration test"
+    name: "Run Spark(${{ github.event.inputs.spark-branch || 'master' }}) / Volcano(${{ github.event.inputs.volcano-branch || github.event.ref || 'current' }}) Integration test"
     runs-on: self-hosted
     env:
       SPARK_LOCAL_IP: localhost
@@ -31,7 +31,7 @@ jobs:
       with:
         fetch-depth: 0
         repository: volcano-sh/volcano
-        ref: ${{ github.event.inputs.volcano-branch || github.event.ref}}
+        ref: ${{ github.event.inputs.volcano-branch || github.event.ref }}
     - name: Checkout Spark repository
       uses: actions/checkout@v2
       with:
