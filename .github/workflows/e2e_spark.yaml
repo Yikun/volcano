@@ -4,8 +4,7 @@ on:
   # Post check in below branches
   push:
     branches:
-      - master
-      - release-1.5
+      - '**'
   # Disable pull_request trigger when ready to merge
   pull_request:
   # Specify Spark and Volcano branch
@@ -22,7 +21,7 @@ on:
 
 jobs:
   k8s-integration-tests:
-    name: "Run Spark(${{ github.event.inputs.spark-branch || 'master' }}) / Volcano(${{ github.event.inputs.volcano-branch || github.event.push.ref || 'master' }}) Integration test"
+    name: "Run Spark(${{ github.event.inputs.spark-branch || 'master' }}) / Volcano(${{ github.event.inputs.volcano-branch || github.event.ref}}) Integration test"
     runs-on: self-hosted
     env:
       SPARK_LOCAL_IP: localhost
@@ -32,13 +31,13 @@ jobs:
       with:
         fetch-depth: 0
         repository: volcano-sh/volcano
-        ref: ${{ github.event.inputs.volcano-branch || github.event.push.ref || 'master' }}
+        ref: ${{ github.event.inputs.volcano-branch || github.event.ref}}
     - name: Checkout Spark repository
       uses: actions/checkout@v2
       with:
         fetch-depth: 0
         repository: apache/spark
-        ref: ${{ github.event.inputs.spark-branch || 'master' }}
+        ref: ${{ github.event.inputs.spark-branch }}
         path: ${{ github.workspace }}/spark
     - name: Install Java 8
       uses: actions/setup-java@v1
@@ -76,7 +75,7 @@ jobs:
       if: failure()
       uses: actions/upload-artifact@v2
       with:
-        name: spark-kubernetes-${{ github.event.inputs.spark-branch || 'master' }}-${{ github.event.inputs.volcano-branch || github.event.push.ref || 'master' }}
+        name: spark-on-kubernetes-it-log
         path: "**/target/integration-tests.log"
     - name: Cleanup minikube
       if: always()
