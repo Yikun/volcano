@@ -5,7 +5,8 @@ on:
   push:
     branches:
       - master
-      - spark-ci
+  # TODO:
+  pull_request:
   # Specify Spark and Volcano branch
   workflow_dispatch:
     inputs:
@@ -68,7 +69,6 @@ jobs:
         eval $(minikube docker-env)
         kubectl create clusterrolebinding serviceaccounts-cluster-admin --clusterrole=cluster-admin --group=system:serviceaccounts || true
         build/sbt -Pvolcano -Pkubernetes -Pkubernetes-integration-tests -Dtest.exclude.tags=minikube,r,local -Dtest.include.tags=volcano "kubernetes-integration-tests/test"
-        build/sbt -Pvolcano -Pkubernetes -Pkubernetes-integration-tests -Dtest.exclude.tags=minikube,r,local "kubernetes-integration-tests/testOnly *VolcanoSuite"
       working-directory: ${{ github.workspace }}/spark
     - name: Upload spark integration tests log files
       if: failure()
