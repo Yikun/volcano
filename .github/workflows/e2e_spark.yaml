@@ -28,7 +28,7 @@ jobs:
         echo '${{ toJSON(github.event) }}'
         
     - name: Checkout Volcano repository
-      if: github.event.inputs.spark-branch!='' || github.event.ref!=''
+      if: github.event.inputs.spark-branch!=''
       uses: actions/checkout@v2
       with:
         fetch-depth: 0
@@ -36,7 +36,7 @@ jobs:
         ref: ${{ github.event.inputs.volcano-branch || github.event.ref }}
 
     - name: Checkout current Volcano repository
-      if: github.event.inputs.spark-branch=='' && github.event.ref==''
+      if: github.event.inputs.spark-branch==''
       uses: actions/checkout@v2
 
     - name: Checkout Spark repository
