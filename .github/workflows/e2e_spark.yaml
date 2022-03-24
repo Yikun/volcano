@@ -4,7 +4,7 @@ on:
   # Post check in below branches
   push:
     branches:
-      - master
+      - '**'
   pull_request:
   # Specify Spark and Volcano branch
   workflow_dispatch:
