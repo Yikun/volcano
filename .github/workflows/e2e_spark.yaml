@@ -20,7 +20,7 @@ on:
 
 jobs:
   k8s-integration-tests:
-    name: "Run Spark(${{ github.event.inputs.spark-branch || 'master' }}) / Volcano(${{ github.event.inputs.volcano-branch || 'current' }}) Integration test"
+    name: "Run Spark(${{ github.event.inputs.spark-branch || 'branch-3.3' }}) / Volcano(${{ github.event.inputs.volcano-branch || 'current' }}) Integration test"
     runs-on: self-hosted
     steps:
 
