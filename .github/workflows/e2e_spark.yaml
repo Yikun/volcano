@@ -49,6 +49,10 @@ jobs:
         # Use minikube kubectl
         minikube kubectl -- get pods -A
         minikube kubectl -- get nodes -oyaml
+    - name: Replace mirror
+      run: |
+        mirror="RUN sed -i 's/deb.debian.org/repo.huaweicloud.com/g' /etc/apt/sources.list\nRUN sed -i 's/deb.debian.org/repo.huaweicloud.com/g' /etc/apt/sources.list"
+        sed -i "30 i ${mirror}" resource-managers/kubernetes/docker/src/main/dockerfiles/spark/Dockerfile.java17
     - name: Run K8S integration test
       run: |
         eval $(minikube docker-env)
